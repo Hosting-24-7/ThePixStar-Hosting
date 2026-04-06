@@ -1,0 +1,23 @@
+CREATE DATABASE pixstar_hosting;
+USE pixstar_hosting;
+
+-- 1. Users Table (Login aur Plans ke liye)
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL, -- Hashed password recommended
+    plan_type ENUM('free', 'gold_4gb', 'ultra_8gb') DEFAULT 'free',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. Servers Table (User ke server ki details)
+CREATE TABLE servers (
+    server_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    server_name VARCHAR(50),
+    ram_allocation INT, -- 1, 4, or 8 (in GB)
+    cpu_limit VARCHAR(20) DEFAULT 'Shared', -- 'Unlimited' for paid
+    status ENUM('online', 'offline', 'starting') DEFAULT 'offline',
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
