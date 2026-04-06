@@ -3,76 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ThePixStar Admin - Manage Users</title>
+    <title>ThePixStar - Admin Control</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: white; text-align: center; }
-        .container { max-width: 900px; margin: 50px auto; padding: 20px; background: #1e293b; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h1 { color: #38bdf8; text-shadow: 0 0 10px #38bdf8; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 15px; border-bottom: 1px solid #334155; text-align: left; }
-        th { background: #334155; color: #fbbf24; }
-        .btn-upgrade { background: #10b981; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; transition: 0.3s; }
-        .btn-upgrade:hover { background: #059669; transform: scale(1.05); }
-        .btn-8gb { background: #8b5cf6; }
-        .btn-8gb:hover { background: #7c3aed; }
-        .status-badge { padding: 5px 10px; border-radius: 15px; font-size: 12px; background: #475569; }
+        :root {
+            --bg-admin: #050505;
+            --sidebar: #0d0d0d;
+            --accent-gold: #ffb700; /* Admin specific gold color */
+            --danger: #ff4d4d;
+            --card: #121212;
+            --border: #222;
+        }
+
+        body { font-family: 'Inter', sans-serif; background: var(--bg-admin); color: white; margin: 0; display: flex; height: 100vh; }
+
+        /* Admin Sidebar */
+        .sidebar { width: 260px; background: var(--sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 25px 0; }
+        .admin-tag { background: var(--accent-gold); color: black; font-weight: bold; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; margin-left: 10px; }
+        .nav-link { padding: 15px 25px; color: #888; text-decoration: none; transition: 0.3s; display: flex; align-items: center; }
+        .nav-link:hover { background: #1a1a1a; color: var(--accent-gold); }
+        .active { color: var(--accent-gold); border-right: 4px solid var(--accent-gold); background: #1a1a1a; }
+
+        /* Main Panel */
+        .main { flex: 1; padding: 40px; overflow-y: auto; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+        .stat-box { background: var(--card); padding: 20px; border-radius: 10px; border: 1px solid var(--border); text-align: center; }
+        .stat-box h2 { font-size: 2rem; margin: 10px 0; color: var(--accent-gold); }
+
+        /* User List Line-by-Line */
+        .user-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 10px; overflow: hidden; }
+        .user-table th { text-align: left; padding: 15px; background: #1a1a1a; color: var(--accent-gold); }
+        .user-table td { padding: 15px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+        
+        .btn-ban { background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+        .btn-edit { background: #333; color: white; border: 1px solid #444; padding: 6px 12px; border-radius: 4px; margin-right: 5px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>👑 ThePixStar Admin Panel</h1>
-    <p>Manage Server RAM & User Plans</p>
+<div class="sidebar">
+    <div style="padding: 0 25px 30px; font-size: 1.3rem; font-weight: bold;">
+        THEPIXSTAR <span class="admin-tag">ADMIN</span>
+    </div>
+    <a href="#" class="nav-link active">📊 System Overview</a>
+    <a href="#" class="nav-link">👥 Manage Users</a>
+    <a href="#" class="nav-link">🖥️ Global Servers</a>
+    <a href="#" class="nav-link">🛠️ Node Settings</a>
+    <a href="#" class="nav-link">💳 Payments/Plans</a>
+</div>
 
-    <table id="userTable">
+<div class="main">
+    <h1>Admin Command Center</h1>
+    
+    <div class="stats-grid">
+        <div class="stat-box">
+            <p>Total Registered Users</p>
+            <h2 id="totalUsers">1,240</h2>
+        </div>
+        <div class="stat-box">
+            <p>Servers Running</p>
+            <h2 id="activeServers">856</h2>
+        </div>
+        <div class="stat-box">
+            <p>Node Load (Global)</p>
+            <h2 id="nodeLoad">42%</h2>
+        </div>
+    </div>
+
+    <h3>Recent User Activity</h3>
+    <table class="user-table">
         <thead>
             <tr>
-                <th>User ID</th>
                 <th>Username</th>
-                <th>Current Plan</th>
+                <th>Email</th>
+                <th>Plan</th>
+                <th>Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody id="userListData">
+        <tbody id="userList">
             <tr>
-                <td>#101</td>
-                <td>Sample_Player</td>
-                <td><span class="status-badge">1GB Free</span></td>
+                <td>Piyush_Alpha</td>
+                <td>piyush@example.com</td>
+                <td><span style="color:var(--accent-gold)">ULTRA</span></td>
+                <td><span style="color:#2ecc71">Active</span></td>
                 <td>
-                    <button class="btn-upgrade" onclick="upgradePlan(101, 4096)">Upgrade 4GB</button>
-                    <button class="btn-upgrade btn-8gb" onclick="upgradePlan(101, 8192)">Upgrade 8GB</button>
+                    <button class="btn-edit">Edit</button>
+                    <button class="btn-ban">Ban</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Guest_Player</td>
+                <td>guest@gmail.com</td>
+                <td>FREE</td>
+                <td><span style="color:#888">Idle</span></td>
+                <td>
+                    <button class="btn-edit">Edit</button>
+                    <button class="btn-ban">Ban</button>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
 
-<script>
-    // Ye function .env wale ADMIN_PASS ka use karke upgrade karega
-    async function upgradePlan(userId, ramSize) {
-        const adminPass = prompt("Enter Admin Password (qwertyui):");
-        
-        const response = await fetch('http://localhost:5000/api/admin/upgrade', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                adminPass: adminPass, 
-                serverId: userId, 
-                newRam: ramSize 
-            })
-        });
-
-        const result = await response.json();
-        if (response.ok) {
-            alert("Success: " + result.message);
-            location.reload(); // Page refresh to see changes
-        } else {
-            alert("Error: " + (result.error || "Ghalat Password!"));
-        }
-    }
-
-    // Yahan hum future mein MySQL se real users fetch karne ka logic daalenge
-</script>
-
 </body>
-  </html>
+                        </html>
