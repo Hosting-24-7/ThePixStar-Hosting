@@ -1,0 +1,44 @@
+import React from 'react';
+
+const Plans = () => {
+  const channelURL = "https://youtube.com/@yesorionplays?si=0QmrsrerHOdNP_rP?sub_confirmation=1";
+
+  const handleUpgrade = () => {
+    // Paid plans ke liye user ko aapke channel par bhej dega
+    window.open(channelURL, "_blank");
+  };
+
+  return (
+    <div style={{ display: 'flex', gap: '20px', padding: '20px' }}>
+      {/* Free Plan */}
+      <div className="plan-card">
+        <h2>Free Tier</h2>
+        <p>1 GB RAM</p>
+        <p>Standard CPU</p>
+        <button disabled>Current Plan</button>
+      </div>
+
+      {/* Paid Plan 1 */}
+      <div className="plan-card" style={{ border: '1px solid gold' }}>
+        <h2>Gold Plan</h2>
+        <p>4 GB RAM</p>
+        <p>Unlimited Players</p>
+        <button onClick={handleUpgrade} style={{ backgroundColor: '#FF0000', color: 'white' }}>
+          Buy on ThePixStar (YouTube)
+        </button>
+      </div>
+
+      {/* Paid Plan 2 */}
+      <div className="plan-card" style={{ border: '1px solid diamond' }}>
+        <h2>Ultra Plan</h2>
+        <p>8 GB RAM</p>
+        <p>Unlimited Everything</p>
+        <button onClick={handleUpgrade} style={{ backgroundColor: '#FF0000', color: 'white' }}>
+          Buy on ThePixStar (YouTube)
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Plans;
