@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ThePixStar - Admin Access</title>
+    <style>
+        body { background: #1a1a1a; color: white; font-family: sans-serif; text-align: center; padding-top: 50px; }
+        input { padding: 10px; width: 250px; border-radius: 5px; border: none; }
+        button { padding: 10px 20px; background: #ff0000; color: white; border: none; cursor: pointer; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Admin Panel Login</h1>
+    <p>ThePixStar Hosting Management</p>
+    <input type="password" id="adminPass" placeholder="Enter Admin Password">
+    <button onclick="checkAdmin()">Login</button>
+
+    <script>
+        function checkAdmin() {
+            const pass = document.getElementById('adminPass').value;
+            if (pass === "qwertyui") {
+                alert("Access Granted!");
+                window.location.href = "admin_dashboard.html"; // Iske baad ye page banana hai
+            } else {
+                alert("Wrong Password! Try again.");
+            }
+        }
+    </script>
+</body>
+</html>
