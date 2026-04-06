@@ -1,13 +1,7 @@
 async function registerUser() {
-    // Input fields se data nikalna
-    const username = document.getElementById('username').value;
+    const username = document.getElementById('user').value; // HTML id check karein
     const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    if (!username || !email || !password) {
-        alert("Bhai, saari details toh bharo!");
-        return;
-    }
+    const password = document.getElementById('pass').value;
 
     try {
         const response = await fetch('/api/signup', {
@@ -16,16 +10,17 @@ async function registerUser() {
             body: JSON.stringify({ username, email, password })
         });
 
-        const data = await response.json();
+        const result = await response.json();
 
         if (response.ok) {
-            alert("Success! 1GB Free Server Allotted to " + username);
-            window.location.href = "login.html"; // Login page par bhej do
+            alert("Registration Successful! 1GB Server Allotted.");
+            localStorage.setItem('username', username); // Dashboard pe naam dikhane ke liye
+            window.location.href = "dashboard.html"; // Seedha dashboard pe bhej dega
         } else {
-            alert("Error: " + data.message);
+            alert("Error: " + result.message);
         }
     } catch (error) {
-        console.error("Signup Error:", error);
-        alert("Backend connect nahi ho raha. Replit check karo!");
+        console.error("Error:", error);
+        alert("Backend se connection nahi ho paa raha!");
     }
 }
