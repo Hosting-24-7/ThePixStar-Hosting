@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThePixStar Admin - Manage Users</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: white; text-align: center; }
+        .container { max-width: 900px; margin: 50px auto; padding: 20px; background: #1e293b; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h1 { color: #38bdf8; text-shadow: 0 0 10px #38bdf8; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 15px; border-bottom: 1px solid #334155; text-align: left; }
+        th { background: #334155; color: #fbbf24; }
+        .btn-upgrade { background: #10b981; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        .btn-upgrade:hover { background: #059669; transform: scale(1.05); }
+        .btn-8gb { background: #8b5cf6; }
+        .btn-8gb:hover { background: #7c3aed; }
+        .status-badge { padding: 5px 10px; border-radius: 15px; font-size: 12px; background: #475569; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>👑 ThePixStar Admin Panel</h1>
+    <p>Manage Server RAM & User Plans</p>
+
+    <table id="userTable">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Current Plan</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="userListData">
+            <tr>
+                <td>#101</td>
+                <td>Sample_Player</td>
+                <td><span class="status-badge">1GB Free</span></td>
+                <td>
+                    <button class="btn-upgrade" onclick="upgradePlan(101, 4096)">Upgrade 4GB</button>
+                    <button class="btn-upgrade btn-8gb" onclick="upgradePlan(101, 8192)">Upgrade 8GB</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Ye function .env wale ADMIN_PASS ka use karke upgrade karega
+    async function upgradePlan(userId, ramSize) {
+        const adminPass = prompt("Enter Admin Password (qwertyui):");
+        
+        const response = await fetch('http://localhost:5000/api/admin/upgrade', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                adminPass: adminPass, 
+                serverId: userId, 
+                newRam: ramSize 
+            })
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            alert("Success: " + result.message);
+            location.reload(); // Page refresh to see changes
+        } else {
+            alert("Error: " + (result.error || "Ghalat Password!"));
+        }
+    }
+
+    // Yahan hum future mein MySQL se real users fetch karne ka logic daalenge
+</script>
+
+</body>
+  </html>
