@@ -1,0 +1,16 @@
+// Admin Authentication Logic
+app.post('/api/admin/login', (req, res) => {
+    const { password } = req.body;
+    if (password === "qwertyui") {
+        res.status(200).send({ message: "Welcome Admin", token: "admin-secret-key" });
+    } else {
+        res.status(401).send({ message: "Invalid Password" });
+    }
+});
+
+// Plan Limits Logic
+const plans = {
+    free: { ram: "1GB", cpu: "1 Core", players: 10 },
+    pro4: { ram: "4GB", cpu: "Unlimited", players: "Unlimited" },
+    pro8: { ram: "8GB", cpu: "Unlimited", players: "Unlimited" }
+};
