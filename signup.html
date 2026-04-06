@@ -1,0 +1,17 @@
+async function registerUser() {
+    const userData = {
+        username: document.getElementById('user').value,
+        email: document.getElementById('email').value,
+        password: document.getElementById('pass').value
+    };
+
+    const response = await fetch('http://localhost:5000/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData)
+    });
+
+    const result = await response.json();
+    alert(result.message); // "User Registered! 1GB Server Allotted."
+    window.location.href = "login.html";
+}
