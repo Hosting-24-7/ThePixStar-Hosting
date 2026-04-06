@@ -1,0 +1,20 @@
+// adminController.js
+const ADMIN_PASS = "qwertyui"; 
+
+const adminLogin = (req, res) => {
+    const { password } = req.body;
+
+    if (password === ADMIN_PASS) {
+        // Admin session ya token generate karein
+        res.status(200).json({ 
+            success: true, 
+            message: "Welcome Admin! Accessing ThePixStar Dashboard...",
+            token: "SECRET_ADMIN_TOKEN" 
+        });
+    } else {
+        res.status(401).json({ 
+            success: false, 
+            message: "Incorrect Password. Access Denied!" 
+        });
+    }
+};
