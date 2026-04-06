@@ -1,9 +1,126 @@
-<div class="main">
-    <h1>Your Servers</h1>
-    <div class="card">
-        <h3>Free Server</h3>
-        <p>RAM: 1 GB</p>
-        <p>Status: <span style="color: green;">Online</span></p>
-        <button class="btn-panel">Manage Server</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThePixStar - Control Panel</title>
+    <style>
+        :root {
+            --bg-black: #050505;
+            --sidebar-black: #0a0a0a;
+            --card-grey: #111111;
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+            --accent-blue: #007bff;
+            --success-green: #2ecc71;
+            --border: #1f1f1f;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg-black); color: var(--text-main); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+
+        /* Sidebar Like Aternos */
+        .sidebar { width: 240px; background: var(--sidebar-black); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 20px 0; }
+        .logo { padding: 0 25px 30px; font-size: 1.5rem; font-weight: bold; color: var(--accent-blue); letter-spacing: 1px; }
+        .nav-link { padding: 12px 25px; color: var(--text-dim); text-decoration: none; display: flex; align-items: center; transition: 0.2s; font-size: 0.95rem; border-left: 3px solid transparent; }
+        .nav-link:hover, .nav-link.active { background: #111; color: white; border-left-color: var(--accent-blue); }
+        .nav-link span { margin-right: 10px; }
+
+        /* Main Content */
+        .main { flex: 1; overflow-y: auto; padding: 40px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        
+        /* Aternos Style Line-by-Line Features */
+        .feature-list { display: flex; flex-direction: column; gap: 15px; }
+        .feature-item { background: var(--card-grey); border: 1px solid var(--border); padding: 20px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
+        .feature-item:hover { border-color: #333; }
+        
+        .feature-info h3 { margin: 0 0 5px; font-size: 1.1rem; }
+        .feature-info p { margin: 0; color: var(--text-dim); font-size: 0.85rem; }
+
+        /* Status & Buttons */
+        .status-badge { background: rgba(46, 204, 113, 0.1); color: var(--success-green); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+        .btn { background: var(--accent-blue); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: 600; }
+        .btn-stop { background: #e74c3c; }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-dim); }
+        .btn-outline:hover { color: white; border-color: white; }
+
+        code { background: #1a1a1a; padding: 4px 8px; border-radius: 4px; font-family: monospace; color: var(--accent-blue); }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="logo">THEPIXSTAR</div>
+    <a href="#" class="nav-link active"><span>🏠</span> Server</a>
+    <a href="#" class="nav-link"><span>📂</span> Files</a>
+    <a href="#" class="nav-link"><span>👥</span> Players</a>
+    <a href="#" class="nav-link"><span>⚙️</span> Options</a>
+    <a href="#" class="nav-link"><span>📦</span> Plugins</a>
+    <a href="#" class="nav-link"><span>💾</span> Backups</a>
+    <div style="margin-top: auto; padding: 0 20px;">
+        <button class="btn-outline" style="width: 100%;" onclick="logout()">Logout</button>
     </div>
 </div>
+
+<div class="main">
+    <div class="header">
+        <div>
+            <h1 style="margin:0;">My Server</h1>
+            <p style="color: var(--text-dim);">Manage your Minecraft world</p>
+        </div>
+        <div class="status-badge">ONLINE</div>
+    </div>
+
+    <div class="feature-list">
+        
+        <div class="feature-item">
+            <div class="feature-info">
+                <h3>Console</h3>
+                <p>Monitor your server logs and run commands in real-time.</p>
+            </div>
+            <button class="btn">Open Console</button>
+        </div>
+
+        <div class="feature-item">
+            <div class="feature-info">
+                <h3>Software</h3>
+                <p>Current: <strong>PaperMC (1.20.1)</strong></p>
+            </div>
+            <button class="btn-outline">Change</button>
+        </div>
+
+        <div class="feature-item">
+            <div class="feature-info">
+                <h3>Server IP</h3>
+                <p>Share this with friends: <code>alpha.thepixstar.com:25565</code></p>
+            </div>
+            <button class="btn-outline">Copy IP</button>
+        </div>
+
+        <div class="feature-item">
+            <div class="feature-info">
+                <h3>Resources</h3>
+                <p>RAM: 1GB / 1GB | CPU: 100% Shared</p>
+            </div>
+            <div style="width: 100px; height: 6px; background: #222; border-radius: 10px;">
+                <div style="width: 80%; height: 100%; background: var(--accent-blue); border-radius: 10px;"></div>
+            </div>
+        </div>
+
+        <div class="feature-item" style="border-left: 4px solid #e74c3c;">
+            <div class="feature-info">
+                <h3>Power Controls</h3>
+                <p>Start, Stop or Restart your server process.</p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn">Start</button>
+                <button class="btn btn-stop">Stop</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
