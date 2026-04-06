@@ -1,4 +1,6 @@
 const express = require('express');
+// Isse browser ko pata chalega ki HTML/CSS files kahan hain
+app.use(express.static('Frontend'));
 const mysql = require('mysql2');
 const dotenv = require('dotenv');
 const cors = require('cors');
