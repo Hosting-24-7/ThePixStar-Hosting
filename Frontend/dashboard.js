@@ -1,11 +1,9 @@
-async function loadDashboard() {
-    // Filhal hum dummy data dikha rahe hain, 
-    // baad mein ise hum JWT Token se real data par connect karenge.
+function loadDashboard() {
+    // LocalStorage se user ka naam uthana
     const username = localStorage.getItem('username') || "Gamer";
-    document.getElementById('welcomeUser').innerText = "Welcome, " + username;
-
-    // Yahan hum Pterodactyl se real RAM usage la sakte hain
-    console.log("Dashboard loaded for " + username);
+    console.log("Dashboard loaded for: " + username);
+    
+    // Aap yahan real API calls add kar sakte hain status check karne ke liye
 }
 
 function logout() {
