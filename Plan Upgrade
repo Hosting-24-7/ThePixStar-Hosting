@@ -1,0 +1,18 @@
+// Server Upgrade Logic (4GB ya 8GB ke liye)
+app.post('/api/admin/upgrade', async (req, res) => {
+    const { serverId, plan } = req.body; // plan: '4gb' or '8gb'
+    const newRam = plan === '8gb' ? 8192 : 4096;
+
+    try {
+        await pteroClient.patch(`/servers/${serverId}/build`, {
+            memory: newRam,
+            cpu: 0, // 0 means Unlimited in Ptero
+            disk: 0, // Unlimited
+            swap: 0,
+            io: 500
+        });
+        res.send({ message: `Server Upgraded to ${plan}!` });
+    } catch (error) {
+        res.status(500).send("Upgrade Failed");
+    }
+});
